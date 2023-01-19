@@ -1,0 +1,12 @@
+    def initializeInventoryLists(self, category):
+        if category.upper() == "CLOTHES":
+            self.clothesForSale.append(BuyableClothing())
+        elif category.upper() == "FOOD":
+            self.foodForSale.append(BuyableFood())
+        elif category.upper() == "GAME":
+            self.gamesForSale.append(BuyableGame())
+        elif category.upper() == "COMPUTER":
+            self.computersForSale.append(BuyableComputers())
+        else:
+            print("Error - was not able to initialize inventory list.")
+            pass
