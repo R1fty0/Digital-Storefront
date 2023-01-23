@@ -1,4 +1,4 @@
-from Buyable import Buyable, BuyableClothing, BuyableFood, BuyableGame, BuyableComputers
+from BuyableItems import Buyable, BuyableClothing, BuyableFood, BuyableGame, BuyableComputers
 
 class StoreInventory:
 
@@ -11,7 +11,7 @@ class StoreInventory:
         self.initializeInventoryLists()
 
     def getFullInventory(self):
-        return self.clothesForSale + self.foodForSale + self.gamesForSale
+        return self.clothesForSale + self.foodForSale + self.gamesForSale + self.computersForSale
 
     def removeItemFromInventory(self, item):
         if type(item) is BuyableClothing:
@@ -43,7 +43,7 @@ class StoreInventory:
             for x in range(num):
                 self.gamesForSale.append(item)
 
-    def initializeInventoryLists(self):
+    def initializeInventoryLists(self):  # All of them require ' ' for strings? Just why?
         #Hoodies
         self.clothesForSale.append(BuyableClothing(59.99, 'Hoodie', 'small'))  # You can add this way, but it is more efficient to do as below ...
         self.clothesForSale.append(BuyableClothing(59.99, 'Hoodie', 'medium'))
@@ -78,9 +78,9 @@ class StoreInventory:
         self.gamesForSale.append(BuyableGame(59.99, 'Forza', 2, 'Video Game'))
 
         # Computers - MBM
-        self.computersForSale.append(BuyableComputers(599.99, "Apple Macbook Pro", "Blue", "1920x1080"))
-        self.computersForSale.append(BuyableComputers(699.99, "Apple Macbook Pro Mini", "Red", "1280x1080"))
-        viperPro = self.computersForSale.append(BuyableComputers(799.99, "Razer Viper Pro", "Green", "1600x900"))
+        self.computersForSale.append(BuyableComputers(599.99, 'Apple Macbook Pro', 'Blue', '1920x1080'))
+        self.computersForSale.append(BuyableComputers(699.99, 'Apple Macbook Pro Mini', "Red", '1280x1080'))
+        viperPro = self.computersForSale.append(BuyableComputers(799.99, 'Razer Viper Pro', 'Green', '1600x900'))
         self.addMultiple(viperPro, 2)
-        self.computersForSale.append(BuyableComputers(564.99, "Dell Work Laptop", "Black", "1280x1024"))
-        self.computersForSale.append(BuyableComputers(199.99, "Dell School Laptop", "Blue", "1366x768"))
+        self.computersForSale.append(BuyableComputers(564.99, 'Dell Work Laptop', 'Black', '1280x1024'))
+        self.computersForSale.append(BuyableComputers(199.99, 'Dell School Laptop', 'Blue', '1366x768'))

@@ -1,0 +1,6 @@
+- Added Computers to Store Inventory
+- Fix Bank Account Issue where user was left with only 1 dollar in their bank account
+
+
+Current Issues:
+- Password check used to buy items not working

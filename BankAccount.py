@@ -1,49 +1,43 @@
 class BankAccount:
 
-    def __init__(self, initialDeposit, password = None):
+    def __init__(self, initialDeposit, password):
         self.balance = float(initialDeposit)
-        if password is None:
-            self.setPassword()
-
-    def setPassword(self):
-        global password
-        password = input('Please enter a password for your account: ')
-        confirmPassword = input('Please input your password one more time to confirm it!')
-        if(password != confirmPassword):
-            print('Your passwords to not match ... ')
-            self.setPassword()
-        else:
-            print('Password set! Your account is now ready!')
+        self.password = password
 
     # Returns true if you have more balance than cost, false if you don't
     def canAfford(self, amount):
-        if(float(amount) <= self.balance):
+        if float(amount) <= self.balance:
             return True
         else:
             return False
 
     def makePurchase(self, amount):
-        if(self.checkPassword()):
-            if(amount <= self.balance):
-                self.balance-=amount
-                print(f'{amount} spent from your account.')
-                print(f'You now have ${self.balance} remaining.')
-                return True
-            else:
-                print('You do not have enough funds left to afford this item.')
-                return False
-        else:
+        if self.checkPassword() and amount <= self.balance:
+            self.balance -= amount
+            print(f'{amount} spent from your account.')
+            print(f'You now have ${self.balance} remaining.')
+            return True
+        elif not self.checkPassword():
+            print("You entered an incorrect password. Please try again later.")
             return False
-
+        else:
+            print('You do not have enough funds left to afford this item.')
+            return False
 
     def balanceReport(self):
         print(f'You have $ {self.balance} left in your account.')
 
-
     def checkPassword(self):
         passEntry = input('Please enter your password to confirm your identity: ')
-        if(passEntry == password):
+        """
+            Tells me what the current values are.
+        """
+        print("User entered:" + str(passEntry))
+        print("Password is:" + str(self.password))
+
+        if passEntry == self.password:
+            print('Correct Password')
             return True
-        else:
+        elif passEntry != self.password:
             print('Incorrect password!')
             return False

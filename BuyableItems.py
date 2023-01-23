@@ -27,6 +27,6 @@ class BuyableGame(Buyable):
 class BuyableComputers(Buyable):
     """ Computers that the user can purchase."""
     def __init__(self, price, name, color, displaySize):
-        super().__init__(price, name, "Shoes")
+        super().__init__(price, name, "Computers")
         self.color = color
         self.displaySize = displaySize
