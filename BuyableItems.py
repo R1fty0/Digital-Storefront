@@ -19,7 +19,7 @@ class BuyableFood(Buyable):
 
 class BuyableGame(Buyable):
     def __init__(self, price, name, numPlayers, genre):
-        super().__init__(price, name, "Clothing")
+        super().__init__(price, name, "Games")
         self.numPlayers = numPlayers
         self.genre = genre
 

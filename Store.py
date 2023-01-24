@@ -2,20 +2,24 @@ from StoreInventory import StoreInventory
 from BankAccount import BankAccount
 from BuyableItems import Buyable
 
+"""
+    Current Task: 
+    Improve the Store class’ viewCatalog() method to provide the user a menu to choose which sub-catalog they want to view individually. 
+    Advanced: Provide the user another menu to choose which specific item they want to view more details about individually. 
+"""
 
 # Initialize inventories
 storeInventory = StoreInventory()
 myStuff = list()
 myShoppingCart = list()
 
-# FUNCTIONS TO MANAGE MENu SYSTEM IN MAIN SHOPPING PROGRAM
+# FUNCTIONS TO MANAGE MENU SYSTEM IN MAIN SHOPPING PROGRAM
 
 
 def viewCatalog():
-    print('Here is a list of all of the items currently for sale!')
-    item: Buyable
-    for item in storeInventory.getFullInventory():
-        print(item.name)
+    instructions = ["Welcome to the Store Catalog!", "Enter the name of the category you see below would like to view more in detail."]
+    for instructions in instructions:
+        print(instructions)
 
 
 def buyItem():

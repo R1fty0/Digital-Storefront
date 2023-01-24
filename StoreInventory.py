@@ -1,4 +1,5 @@
-from BuyableItems import Buyable, BuyableClothing, BuyableFood, BuyableGame, BuyableComputers
+from BuyableItems import BuyableClothing, BuyableFood, BuyableGame, BuyableComputers
+
 
 class StoreInventory:
 
@@ -21,7 +22,7 @@ class StoreInventory:
         elif type(item) is BuyableGame:
             self.gamesForSale.remove(item)
         elif type(item) is BuyableComputers:
-            # Removes a shoe from the store's inventory
+            # Removes a computer from the store's inventory
             self.computersForSale.remove(item)
 
     def restockItemToInventory(self, item):
