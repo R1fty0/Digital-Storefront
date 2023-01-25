@@ -1,6 +1,20 @@
 - Added Computers to Store Inventory
 - Fix Bank Account Issue where user was left with only 1 dollar in their bank account
+- Added a menu where the user can view the items of a single category individually
+- Improved the menu screen instruction display by adding all instruction into a list that is looped through to display the instructions
+- Added the ability to track the 3 most recent purchases
+- Gave the user the option to view their most recent purchases (may add option to refund them)
+- Text can be made and displayed with modularity
 
 
 Current Issues:
-- Password check used to buy items not working
+- Password Verification is bust, making item purchases completely bugged.
+
+
+To-Do (5 hours remain):
+- Improve UI
+- Pygame UI
+- Simplified Initialize Inventories
+- 2 Tier 3 Design Challenges
+- 1 Tier 2 Design Challenges
+- Create Buttons

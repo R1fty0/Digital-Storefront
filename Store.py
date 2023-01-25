@@ -4,25 +4,49 @@ from BuyableItems import Buyable
 
 """
     Current Task: 
-    Improve the Store class’ viewCatalog() method to provide the user a menu to choose which sub-catalog they want to view individually. 
-    Advanced: Provide the user another menu to choose which specific item they want to view more details about individually. 
+    Tier 1: Password Issues
+    Tier 2: Improve the reviewMyStuff() method, which pulls data from the list that contains all of the items you have bought, to contain a lot more functionality. Instead of just reporting everything the user has bought all at once, provide a more customized experience that gives the user more choice and information when reviewing their stuff. Hint: You may need to adjust how the user’s bought items are stored and tracked to provide access to certain information. 	 
+    Tier 3: Provide the user another menu to choose which specific item they want to view more details about individually. 
 """
 
 # Initialize inventories
-storeInventory = StoreInventory()
+storeInventory = StoreInventory(3)
 myStuff = list()
 myShoppingCart = list()
 
-# FUNCTIONS TO MANAGE MENU SYSTEM IN MAIN SHOPPING PROGRAM
+
+"""
+    # FUNCTIONS TO MANAGE MENU SYSTEM IN MAIN SHOPPING PROGRAM
+"""
+
+
+def viewRecentPurchases():
+    """ Allows the user to view the most recent purchases they made. """
+    listOfPurchases = storeInventory.soldItems
+    if len(listOfPurchases) != 0:
+        print("Here is the list of items you most recently purchased:")
+        for item in listOfPurchases:
+            print(f"- You purchased the item {item.name} for {item.price} dollars.")
+            listOfPurchases.remove(item)
+    else:  # If there is no purchases made by the user.
+        print("Looks like you haven't purchased anything. Nothing to see here...")
 
 
 def viewCatalog():
-    instructions = ["Welcome to the Store Catalog!", "Enter the name of the category you see below would like to view more in detail."]
+    instructions = ["Welcome to the Store Catalog!",
+                    "Enter the name of the category you see below would like to view more in detail."]
+    categories = ["- Clothing", "- Food", "- Computers", "- Games"]
     for instructions in instructions:
         print(instructions)
+    for instructions in categories:
+        print(instructions)
+    category = input("What category would you like to view?: ")
+    print("\n****************************************************** ")
+    storeInventory.displayCategoryInventory(category)
 
 
 def buyItem():
+    """ Purchases an item a user wants."""
     itemName = input('Please type in the name of the item you wish to buy!')
 
     # Holding variable for the desired item, if found
@@ -39,6 +63,7 @@ def buyItem():
     if itemToPurchase is not None:
         print(f'We have {itemToPurchase.name} in stock!')
         userChoice = int(input('Type 1 to BUY NOW, 2 to place in your shopping cart, or any other key to cancel purchase.'))
+        myBankAccount.makePurchase(itemToPurchase.price, itemToPurchase.name)
 
         if userChoice == 1:
             makePurchaseFromStore(itemToPurchase)
@@ -117,7 +142,7 @@ def moveItemFromShoppingCartToInventory(item):
 def makePurchaseFromStore(item):
     # If you can afford the item, buy it and remove it from the store
     if myBankAccount.canAfford(item.price):
-        myBankAccount.makePurchase(item.price)
+        myBankAccount.makePurchase(item.price, item.name)
         print(f'Purchase complete! You now own {item.name}')
         myStuff.append(item)
         storeInventory.removeItemFromInventory(item)
@@ -128,7 +153,7 @@ def makePurchaseFromStore(item):
 def makePurchaseFromShoppingCart(item):
     # If you can afford the item, buy it and remove it from the store
     if myBankAccount.canAfford(item.price):
-        myBankAccount.makePurchase(item.price)
+        myBankAccount.makePurchase(item.price, item.name)
         print(f'Purchase complete! You now own {item.name}')
         myStuff.append(item)
         myShoppingCart.remove(item)
@@ -144,32 +169,30 @@ def makePurchaseFromShoppingCart(item):
 
 def Setup():
     print('Welcome to my storefront!')
-
     # setup bank account
     print('To begin, please set up a bank account.')
     deposit = input('How much do you want to deposit into your account?: ')
     global myBankAccount
     myBankAccount = BankAccount(deposit, setPassword())
-
     # Begin shopping
     stillShopping = True
-
     Menu(stillShopping)
 
 
 def Menu(stillShopping):
-    while stillShopping:
-        print("\n****************************************************** ")
-        print("Please choose from one of the following menu options: ")
-        print("1. View catalog of items to buy")
-        print("2. Buy an item")
-        print("3. View your cart of held items")
-        print("4. Review the items you already own")
-        print("5. View the status of your financials")
-        print("6. Open the Store's Visual Interface.")
-        print("7. Exit program")
+    menu = ["\n******************************************************"
+            "\nPlease choose from one of the following menu options: ", "1. View catalog of items to buy",
+            "2. Buy an item",
+            "3. View your cart of held items", "4. Review the items you already own",
+            "5. View the status of your financials",
+            "6. View the most recent items you purchased."
+            "\n7. Open the Store's Visual Interface.", "8. Exit program"]
 
-        userChoice = int(input())
+    while stillShopping:
+
+        for instructions in menu:
+            print(instructions)
+        userChoice = int(input("What would you like to do?"))
 
         if userChoice == 1:
             viewCatalog()
@@ -182,8 +205,10 @@ def Menu(stillShopping):
         elif userChoice == 5:
             reviewFinancials()
         elif userChoice == 6:
-            startVisualStore()
+            viewRecentPurchases()
         elif userChoice == 7:
+            startVisualStore()
+        elif userChoice == 8:
             print('Thanks for shopping! Now exiting program ... ')
             stillShopping = False
         else:
@@ -198,7 +223,7 @@ def setPassword():
         print('Your passwords to not match ... ')
         setPassword()
     else:
-        print('Password set! Your account is now ready!')
+        print('Password set! Your account is now ready and you can start shopping!')
         return password
 
 
@@ -207,5 +232,11 @@ def startVisualStore():
     import VisualStore
     VisualStore.Store()
 
+
+def terminateSession():
+    print("Our security measures have determined that you are not the current user that is logged in right now. Session Terminated.")
+
+
 if __name__ == "__main__":
+    """ Program starts here. """
     Setup()

@@ -1,38 +1,39 @@
 import pygame
+from VisualStoreData import WindowManagement, Color, Text
+pygame.font.init()  # Constructor for Fonts in Pygame
 
+"""
+# Create Fonts for UI
+    TitleFont = pygame.font.SysFont("Century Gothic", int(WindowWidth/20), True, False)
+    
+# Create Text for UI
+    TitleLabel = TitleFont.render("Rebound", False, 1, Sliver.get_color())
 
-class WindowManagement:
-    def __init__(self, FPS, WindowWidth, WindowHeight, Caption):
-        """ Contains the information needed for the core game loop to run."""
-        self.FPS = FPS
-        self.WindowWidth = WindowWidth
-        self.WindowHeight = WindowHeight
-        self.Caption = Caption
+# Display Text on Screen
+    Window.blit(TitleLabel, (WindowWidth / 2 - TitleLabel.get_width() / 2, WindowHeight / 4 - TitleLabel.get_height() / 2))    
 
-    def get_parameter(self, parameterType):
-        """ Returns a parameter upon request. """
-        if parameterType.upper() == "FPS":
-            return self.FPS
-        elif parameterType.upper() == "WindowWidth":
-            return self.WindowWidth
-        elif parameterType.upper() == "WindowHeight":
-            return self.WindowHeight
-        elif parameterType.upper() == "Caption":
-            return self.Caption
-        else:
-            print("Invalid Request, Please double check spelling")
-            pass
-
-    def create_game_window(self):
-        """Creates a game window that displayed the visuals of the game."""
-        Window = pygame.display.set_mode((self.WindowWidth, self.WindowHeight))
-        pygame.display.set_caption(str(self.Caption))
-
+"""
 
 Storefront = WindowManagement(75, 800, 600, "Digital Storefront!")
+MenuBackground = Color((136, 212, 152))
+White = Color((0, 0, 0))
+menu = Text("Ma mere est tres petite", "Century Gothic", 30, False, False, False, White.get_color(), 100, 80)
+
+"""
+    Color Pallet: https://coolors.co/114b5f-1a936f-88d498-c6dabf-f3e9d2
+"""
+
+
+def Graphics(ScreenColor, text):
+    Storefront.Window.fill(ScreenColor)
+    Storefront.Window.blit(text.create_text(), (text.horizontalPos, text.verticalPos))
+    pygame.display.update()  # Updates the Screen with whatever visuals were processed in this method prior.
 
 
 def Store():
+
+
+
     FPSClock = pygame.time.Clock()  # Clock that maintains FPS
 
     Storefront.create_game_window()   # Creates Game Window
@@ -45,5 +46,10 @@ def Store():
         for event in pygame.event.get():  # Quits Program if the X button is pressed
             if event.type == pygame.QUIT:
                 IsGameRunning = False
+            Graphics(MenuBackground.get_color(), menu)
 
     pygame.quit()   # Quits program
+
+
+if __name__ == "__main__":
+    Store()

@@ -3,13 +3,15 @@ from BuyableItems import BuyableClothing, BuyableFood, BuyableGame, BuyableCompu
 
 class StoreInventory:
 
-    def __init__(self):
+    def __init__(self, numOfMostRecentPurchases):
         # Items that can be sold: clothes, food, games, computers
         self.clothesForSale = []
         self.foodForSale = []
         self.gamesForSale = []
         self.computersForSale = []
         self.initializeInventoryLists()
+        self.soldItems = []
+        self.numOfMostRecentPurchases = numOfMostRecentPurchases
 
     def getFullInventory(self):
         return self.clothesForSale + self.foodForSale + self.gamesForSale + self.computersForSale
@@ -22,8 +24,12 @@ class StoreInventory:
         elif type(item) is BuyableGame:
             self.gamesForSale.remove(item)
         elif type(item) is BuyableComputers:
-            # Removes a computer from the store's inventory
             self.computersForSale.remove(item)
+
+        if len(self.soldItems) != int(self.numOfMostRecentPurchases) - 1:
+            self.soldItems.append(item)  # Adds the purchased item to the sold items list
+        else:
+            pass
 
     def restockItemToInventory(self, item):
         if type(item) is BuyableClothing:
@@ -44,17 +50,17 @@ class StoreInventory:
             for x in range(num):
                 self.gamesForSale.append(item)
 
-    def initializeInventoryLists(self):  # All of them require ' ' for strings? Just why?
-        #Hoodies
+    def initializeInventoryLists(self):
+        # Hoodies
         self.clothesForSale.append(BuyableClothing(59.99, 'Hoodie', 'small'))  # You can add this way, but it is more efficient to do as below ...
         self.clothesForSale.append(BuyableClothing(59.99, 'Hoodie', 'medium'))
         self.clothesForSale.append(BuyableClothing(59.99, 'Hoodie', 'large'))
 
-        #Shoes
+        # Shoes
         self.clothesForSale.append(BuyableClothing(99.99, 'Dress Shoes', '8'))
         self.clothesForSale.append(BuyableClothing(9.99, 'Sandals', '5'))
 
-        #Gloves
+        # Gloves
         gloves = BuyableClothing(13.49, 'Gloves', 'Medium')
         self.addMultiple(gloves, 3)
 
@@ -69,7 +75,6 @@ class StoreInventory:
         rice = BuyableFood(7.99, 'Rice', 2000)
         self.addMultiple(rice, 5)
 
-
         #  Board Games
         self.gamesForSale.append(BuyableGame(19.99, 'Monopoly', 4, 'Board Game'))
         self.gamesForSale.append(BuyableGame(24.99, 'Scrabble', 2, 'Board Game'))
@@ -78,10 +83,31 @@ class StoreInventory:
         self.gamesForSale.append(BuyableGame(79.99, 'Breath of the Wild', 2, 'Video Game'))
         self.gamesForSale.append(BuyableGame(59.99, 'Forza', 2, 'Video Game'))
 
-        # Computers - MBM
+        # Computers
         self.computersForSale.append(BuyableComputers(599.99, 'Apple Macbook Pro', 'Blue', '1920x1080'))
         self.computersForSale.append(BuyableComputers(699.99, 'Apple Macbook Pro Mini', "Red", '1280x1080'))
         viperPro = self.computersForSale.append(BuyableComputers(799.99, 'Razer Viper Pro', 'Green', '1600x900'))
         self.addMultiple(viperPro, 2)
         self.computersForSale.append(BuyableComputers(564.99, 'Dell Work Laptop', 'Black', '1280x1024'))
         self.computersForSale.append(BuyableComputers(199.99, 'Dell School Laptop', 'Blue', '1366x768'))
+
+    def displayCategoryInventory(self, category):
+        """Displays the store's inventory of items in a certain category."""
+        inventory = None
+        if category.upper() == "CLOTHING":
+            inventory = self.clothesForSale
+            print("Here all the items available for purchase in the Clothing category!")
+        elif category.upper() == "FOOD":
+            inventory = self.foodForSale
+            print("Here all the items available for purchase in the Foods category!")
+        elif category.upper() == "GAMES":
+            inventory = self.gamesForSale
+            print("Here all the items available for purchase in the Games category!")
+        elif category.upper() == "COMPUTERS":
+            inventory = self.computersForSale
+            print("Here all the items available for purchase in the Computers category!")
+        if inventory is not None:
+            for item in inventory:
+                print(item.name)
+        else:
+            print("The category you are looking to access does not exist. Sorry!")
