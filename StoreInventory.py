@@ -1,141 +1,36 @@
-from BuyableItems import BuyableClothing, BuyableFood, BuyableGame, BuyableComputers
+from Items import Category, Clothing, Food, Games, Computers
 
 
 class StoreInventory:
 
-    def __init__(self, numOfMostRecentPurchases):
-        # Items that can be sold: clothes, food, games, computers
-        self.clothesForSale = []
-        self.foodForSale = []
-        self.gamesForSale = []
-        self.computersForSale = []
-        self.initializeInventoryLists()
-        self.soldItems = []
-        self.numOfMostRecentPurchases = numOfMostRecentPurchases
+    def __init__(self):
+        """ Contains all the items available for purchase in the store"""
+        self.clothingCategory = Category("Clothing")
+        self.foodCategory = Category("Food")
+        self.gamesCategory = Category("Games")
+        self.computersCategory = Category("Computers")
 
     def getFullInventory(self):
-        return self.clothesForSale + self.foodForSale + self.gamesForSale + self.computersForSale
+        """ Returns the store's full inventory. """
+        return self.clothingCategory.get_inventory() + self.foodCategory.get_inventory() + self.gamesCategory.get_inventory() + self.computersCategory.get_inventory()
 
-    def removeItemFromInventory(self, item):
-        if type(item) is BuyableClothing:
-            self.clothesForSale.remove(item)
-        elif type(item) is BuyableFood:
-            self.foodForSale.remove(item)
-        elif type(item) is BuyableGame:
-            self.gamesForSale.remove(item)
-        elif type(item) is BuyableComputers:
-            self.computersForSale.remove(item)
+    def addItemsToInitialInventory(self):
+        """ Adds items to the initial inventory. """
+        items = [Food("10.00", "Rice", 2000), Games("69.99", "Super Mario Bros", 1, "Arcade"), Clothing("15.99", "Hoodie", "small"), Computers("999.99", "Apple Macbook Pro", "Blue", "1280x1080")]
+        for item in items:
+            if type(item) == Food:  # Adds food items to the food category.
+                self.foodCategory.stockItemToInventory(item)
+            if type(item) == Games:  # Adds food items to the game category.
+                self.gamesCategory.stockItemToInventory(item)
+            if type(item) == Clothing:  # Adds food items to the clothing category.
+                self.clothingCategory.stockItemToInventory(item)
+            if type(item) == Computers:  # Adds food items to the computer category.
+                self.computersCategory.stockItemToInventory(item)
 
-        if len(self.soldItems) != int(self.numOfMostRecentPurchases) - 1:
-            self.soldItems.append(item)  # Adds the purchased item to the sold items list
-        else:
-            pass
+    def addNewItemToCategory(self):
+        """ Adds a new item to the desired inventory."""
+        pass
 
-    def restockItemToInventory(self, item):
-        if type(item) is BuyableClothing:
-            self.clothesForSale.append(item)
-        elif type(item) is BuyableFood:
-            self.foodForSale.append(item)
-        elif type(item) is BuyableGame:
-            self.gamesForSale.append(item)
 
-    def addMultiple(self, item, num):
-        if type(item) is BuyableClothing:
-            for x in range(num):
-                self.clothesForSale.append(item)
-        elif type(item) is BuyableFood:
-            for x in range(num):
-                self.foodForSale.append(item)
-        elif type(item) is BuyableGame:
-            for x in range(num):
-                self.gamesForSale.append(item)
 
-    def initializeInventoryLists(self):
-        # Hoodies
-        self.clothesForSale.append(BuyableClothing(59.99, 'Hoodie', 'small'))  # You can add this way, but it is more efficient to do as below ...
-        self.clothesForSale.append(BuyableClothing(59.99, 'Hoodie', 'medium'))
-        self.clothesForSale.append(BuyableClothing(59.99, 'Hoodie', 'large'))
-
-        # Shoes
-        self.clothesForSale.append(BuyableClothing(99.99, 'Dress Shoes', '8'))
-        self.clothesForSale.append(BuyableClothing(9.99, 'Sandals', '5'))
-
-        # Gloves
-        gloves = BuyableClothing(13.49, 'Gloves', 'Medium')
-        self.addMultiple(gloves, 3)
-
-        # Perishable Foods
-        self.foodForSale.append(BuyableFood(12.99, 'Pizza', 400))
-        self.foodForSale.append(BuyableFood(24.00, 'Lasagna', 1000))
-        self.foodForSale.append(BuyableFood(3.99, 'Spinach', 250))
-
-        # Non-perishables
-        self.foodForSale.append(BuyableFood(1.49, 'Beans', 300))
-        self.foodForSale.append(BuyableFood(0.99, 'Noodles', 125))
-        rice = BuyableFood(7.99, 'Rice', 2000)
-        self.addMultiple(rice, 5)
-
-        #  Board Games
-        self.gamesForSale.append(BuyableGame(19.99, 'Monopoly', 4, 'Board Game'))
-        self.gamesForSale.append(BuyableGame(24.99, 'Scrabble', 2, 'Board Game'))
-
-        #  Computer Games
-        self.gamesForSale.append(BuyableGame(79.99, 'Breath of the Wild', 2, 'Video Game'))
-        self.gamesForSale.append(BuyableGame(59.99, 'Forza', 2, 'Video Game'))
-
-        # Computers
-        self.computersForSale.append(BuyableComputers(599.99, 'Apple Macbook Pro', 'Blue', '1920x1080'))
-        self.computersForSale.append(BuyableComputers(699.99, 'Apple Macbook Pro Mini', "Red", '1280x1080'))
-        viperPro = self.computersForSale.append(BuyableComputers(799.99, 'Razer Viper Pro', 'Green', '1600x900'))
-        self.addMultiple(viperPro, 2)
-        self.computersForSale.append(BuyableComputers(564.99, 'Dell Work Laptop', 'Black', '1280x1024'))
-        self.computersForSale.append(BuyableComputers(199.99, 'Dell School Laptop', 'Blue', '1366x768'))
-
-    def displayCategory(self, category):
-        """Displays the store's inventory of items in a certain category."""
-        try:
-            if category.upper() == "CLOTHING":
-                inventory = self.clothesForSale
-                print("Here all the items available for purchase in the Clothing category!")
-                for items in inventory:
-                    print(f"- {items.name}")
-                self.viewItemInDetail(inventory)
-            elif category.upper() == "FOOD":
-                inventory = self.foodForSale
-                print("Here all the items available for purchase in the Foods category!")
-                for items in inventory:
-                    print(f"- {items.name}")
-                self.viewItemInDetail(inventory)
-            elif category.upper() == "GAMES":
-                inventory = self.gamesForSale
-                print("Here all the items available for purchase in the Games category!")
-                for items in inventory:
-                    print(f"- {items.name}")
-                self.viewItemInDetail(inventory)
-            elif category.upper() == "COMPUTERS":
-                inventory = self.computersForSale
-                print("Here all the items available for purchase in the Computers category!")
-                for items in inventory:
-                    print(f"- {items.name}")
-                self.viewItemInDetail(inventory)
-            else:
-                print("An error occurred. The category or item you are looking to access may not exist. Sorry!")
-        except ValueError or AttributeError:
-            print("Something went wrong! Returning to main menu.")
-
-    def viewItemInDetail(self, inventory): # More than one rice
-        """ Lets the user view any item in more detail."""
-        choices = ["Press 1 to view any item in more detail, Press any other key to return to the main menu."]
-        for instructions in choices:
-            print(instructions)
-        choice = int(input("What would you like to do?:"))
-        print("ASKED USER I")
-        if choice == 1:
-            selectedItem = input("Enter the name of the item you would like to see in detail: ")
-            print("ASKED USER II")
-            for item in inventory:
-                if selectedItem.upper() == item.name.upper():
-                    stats = (vars(item))
-                    for key, value in stats.items():
-                        pass
 

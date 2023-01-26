@@ -1,0 +1,95 @@
+       def __init__(self, numOfMostRecentPurchases):
+        # Items that can be sold: clothes, food, games, computers
+        self.clothesForSale = []
+        self.foodForSale = []
+        self.gamesForSale = []
+        self.computersForSale = []
+        self.initializeInventoryLists()
+        self.soldItems = []
+        self.numOfMostRecentPurchases = numOfMostRecentPurchases
+
+
+   def getFullInventory(self):
+        return self.clothesForSale + self.foodForSale + self.gamesForSale + self.computersForSale
+
+    def removeItemFromInventory(self, item):
+        if type(item) is Clothing:
+            self.clothesForSale.remove(item)
+        elif type(item) is Food:
+            self.foodForSale.remove(item)
+        elif type(item) is Games:
+            self.gamesForSale.remove(item)
+        elif type(item) is Computers:
+            self.computersForSale.remove(item)
+
+        if len(self.soldItems) != int(self.numOfMostRecentPurchases) - 1:
+            self.soldItems.append(item)  # Adds the purchased item to the sold items list
+        else:
+            pass
+
+    def restockItemToInventory(self, item):
+        if type(item) is Clothing:
+            self.clothesForSale.append(item)
+        elif type(item) is Food:
+            self.foodForSale.append(item)
+        elif type(item) is Games:
+            self.gamesForSale.append(item)
+
+    def addMultiple(self, item, num):
+        if type(item) is Clothing:
+            for x in range(num):
+                self.clothesForSale.append(item)
+        elif type(item) is Food:
+            for x in range(num):
+                self.foodForSale.append(item)
+        elif type(item) is Games:
+            for x in range(num):
+                self.gamesForSale.append(item)
+
+        def displayCategory(self, category):
+        """Displays the store's inventory of items in a certain category."""
+        try:
+            if category.upper() == "CLOTHING":
+                inventory = self.clothesForSale
+                print("Here all the items available for purchase in the Clothing category!")
+                for items in inventory:
+                    print(f"- {items.name}")
+                self.viewItemInDetail(inventory)
+            elif category.upper() == "FOOD":
+                inventory = self.foodForSale
+                print("Here all the items available for purchase in the Foods category!")
+                for items in inventory:
+                    print(f"- {items.name}")
+                self.viewItemInDetail(inventory)
+            elif category.upper() == "GAMES":
+                inventory = self.gamesForSale
+                print("Here all the items available for purchase in the Games category!")
+                for items in inventory:
+                    print(f"- {items.name}")
+                self.viewItemInDetail(inventory)
+            elif category.upper() == "COMPUTERS":
+                inventory = self.computersForSale
+                print("Here all the items available for purchase in the Computers category!")
+                for items in inventory:
+                    print(f"- {items.name}")
+                self.viewItemInDetail(inventory)
+            else:
+                print("An error occurred. The category or item you are looking to access may not exist. Sorry!")
+        except ValueError or AttributeError:
+            print("Something went wrong! Returning to main menu.")
+
+    def viewItemInDetail(self, inventory): # More than one rice
+        """ Lets the user view any item in more detail."""
+        choices = ["Press 1 to view any item in more detail, Press any other key to return to the main menu."]
+        for instructions in choices:
+            print(instructions)
+        choice = int(input("What would you like to do?:"))
+        print("ASKED USER I")
+        if choice == 1:
+            selectedItem = input("Enter the name of the item you would like to see in detail: ")
+            print("ASKED USER II")
+            for item in inventory:
+                if selectedItem.upper() == item.name.upper():
+                    stats = (vars(item))
+                    for key, value in stats.items():
+                        pass

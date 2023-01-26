@@ -35,3 +35,5 @@ last_item = next(itertools.islice(my_list, 1, None))
 print(last_item) # 5
 
 
+
+

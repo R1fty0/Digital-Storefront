@@ -1,6 +1,6 @@
 from StoreInventory import StoreInventory
 from BankAccount import BankAccount
-from BuyableItems import Buyable
+from Items import Item
 
 
 """
