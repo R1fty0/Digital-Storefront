@@ -2,19 +2,16 @@
 - Fix Bank Account Issue where user was left with only 1 dollar in their bank account
 - Added a menu where the user can view the items of a single category individually
 - Improved the menu screen instruction display by adding all instruction into a list that is looped through to display the instructions
-- Added the ability to track the 3 most recent purchases
+- Added the ability to track the 3 most recent purchases.
 - Gave the user the option to view their most recent purchases (may add option to refund them)
 - Text can be made and displayed with modularity
+- Rewrote the Password logic to resolve verification error (this took way,way,way too long)
+- Passwords can now be letters or words.
+- Gave the user the option of viewing each characteristic of reach item they bought
 
 
-Current Issues:
-- Password Verification is bust, making item purchases completely bugged.
-
-
-To-Do (5 hours remain):
-- Improve UI
-- Pygame UI
-- Simplified Initialize Inventories
-- 2 Tier 3 Design Challenges
-- 1 Tier 2 Design Challenges
-- Create Buttons
+To-Do:
+- Simplify Initialize Inventories
+- Track the three most recent items that were purchased and their time.
+- Enable the user to return the last item they purchased.
+- Enable items and their specifics to be viewed individually

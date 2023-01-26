@@ -91,23 +91,51 @@ class StoreInventory:
         self.computersForSale.append(BuyableComputers(564.99, 'Dell Work Laptop', 'Black', '1280x1024'))
         self.computersForSale.append(BuyableComputers(199.99, 'Dell School Laptop', 'Blue', '1366x768'))
 
-    def displayCategoryInventory(self, category):
+    def displayCategory(self, category):
         """Displays the store's inventory of items in a certain category."""
-        inventory = None
-        if category.upper() == "CLOTHING":
-            inventory = self.clothesForSale
-            print("Here all the items available for purchase in the Clothing category!")
-        elif category.upper() == "FOOD":
-            inventory = self.foodForSale
-            print("Here all the items available for purchase in the Foods category!")
-        elif category.upper() == "GAMES":
-            inventory = self.gamesForSale
-            print("Here all the items available for purchase in the Games category!")
-        elif category.upper() == "COMPUTERS":
-            inventory = self.computersForSale
-            print("Here all the items available for purchase in the Computers category!")
-        if inventory is not None:
+        try:
+            if category.upper() == "CLOTHING":
+                inventory = self.clothesForSale
+                print("Here all the items available for purchase in the Clothing category!")
+                for items in inventory:
+                    print(f"- {items.name}")
+                self.viewItemInDetail(inventory)
+            elif category.upper() == "FOOD":
+                inventory = self.foodForSale
+                print("Here all the items available for purchase in the Foods category!")
+                for items in inventory:
+                    print(f"- {items.name}")
+                self.viewItemInDetail(inventory)
+            elif category.upper() == "GAMES":
+                inventory = self.gamesForSale
+                print("Here all the items available for purchase in the Games category!")
+                for items in inventory:
+                    print(f"- {items.name}")
+                self.viewItemInDetail(inventory)
+            elif category.upper() == "COMPUTERS":
+                inventory = self.computersForSale
+                print("Here all the items available for purchase in the Computers category!")
+                for items in inventory:
+                    print(f"- {items.name}")
+                self.viewItemInDetail(inventory)
+            else:
+                print("An error occurred. The category or item you are looking to access may not exist. Sorry!")
+        except ValueError or AttributeError:
+            print("Something went wrong! Returning to main menu.")
+
+    def viewItemInDetail(self, inventory): # More than one rice
+        """ Lets the user view any item in more detail."""
+        choices = ["Press 1 to view any item in more detail, Press any other key to return to the main menu."]
+        for instructions in choices:
+            print(instructions)
+        choice = int(input("What would you like to do?:"))
+        print("ASKED USER I")
+        if choice == 1:
+            selectedItem = input("Enter the name of the item you would like to see in detail: ")
+            print("ASKED USER II")
             for item in inventory:
-                print(item.name)
-        else:
-            print("The category you are looking to access does not exist. Sorry!")
+                if selectedItem.upper() == item.name.upper():
+                    stats = (vars(item))
+                    for key, value in stats.items():
+                        pass
+

@@ -2,11 +2,13 @@ from StoreInventory import StoreInventory
 from BankAccount import BankAccount
 from BuyableItems import Buyable
 
+
 """
-    Current Task: 
-    Tier 1: Password Issues
-    Tier 2: Improve the reviewMyStuff() method, which pulls data from the list that contains all of the items you have bought, to contain a lot more functionality. Instead of just reporting everything the user has bought all at once, provide a more customized experience that gives the user more choice and information when reviewing their stuff. Hint: You may need to adjust how the user’s bought items are stored and tracked to provide access to certain information. 	 
-    Tier 3: Provide the user another menu to choose which specific item they want to view more details about individually. 
+    Current Tasks: 
+    Tier 2:  Improve the reviewMyStuff() method, which pulls data from the list that contains all of the items you have bought, 
+    to contain a lot more functionality. Instead of just reporting everything the user has bought all at once, provide a more customized experience that gives the user more choice and information when reviewing their stuff. 
+    Hint: You may need to adjust how the user’s bought items are stored and tracked to provide access to certain information. 	 	
+    Tier 3: (viewCatalog) Provide the user another menu to choose which specific item they want to view more details about individually. 
 """
 
 # Initialize inventories
@@ -42,7 +44,7 @@ def viewCatalog():
         print(instructions)
     category = input("What category would you like to view?: ")
     print("\n****************************************************** ")
-    storeInventory.displayCategoryInventory(category)
+    storeInventory.displayCategory(category)
 
 
 def buyItem():
@@ -61,25 +63,30 @@ def buyItem():
 
     # If a suitable item was found, give them the option to buy it!
     if itemToPurchase is not None:
-        print(f'We have {itemToPurchase.name} in stock!')
-        userChoice = int(input('Type 1 to BUY NOW, 2 to place in your shopping cart, or any other key to cancel purchase.'))
-        myBankAccount.makePurchase(itemToPurchase.price, itemToPurchase.name)
-
+        print(f"We have {itemToPurchase.name} in stock!")
+        userChoice = int(input("Press 1 to buy, Press 2 to put item in shopping cart or Press 3 to exit."))
         if userChoice == 1:
-            makePurchaseFromStore(itemToPurchase)
+            passwordVerified = myBankAccount.checkPassword()
+            if passwordVerified:
+                makePurchaseFromStore(itemToPurchase)
+            else:
+                print("Purchase Failed!")
         elif userChoice == 2:
             print('We will hold onto this item for you. Adding to shopping cart ... ')
             moveItemToShoppingCart(itemToPurchase)
-        else:
-            print('Purchase cancelled! Sending you back to the storefront ... ')
-    else:  # If user-entered item is not found in the store inventory
-        print('The item you are looking for is sold out or does not exist. Sorry!')
+    else:
+        print('Something went wrong!. Purchase cancelled! Sending you back to the storefront ... ')
 
 
 def reviewMyInventory():
-    print('Here is a list of the items you now own: ')
+    food = list()
+    clothes = list()
+    computers = list()
+    games = list()
+    """ Shows the user all the items in each category they own. """
     for item in myStuff:
-        print(item.name)
+        # if item.name.lower() ==
+        pass
 
 
 def reviewFinancials():
@@ -130,11 +137,13 @@ def removeItemFromShoppingCart():
 
 
 def moveItemToShoppingCart(item):
+    """ Moves a selected item to the user's shopping cart."""
     myShoppingCart.append(item)
     storeInventory.removeItemFromInventory(item)
 
 
 def moveItemFromShoppingCartToInventory(item):
+    """ Moves a selected item to the user's inventory after they purchase an item from their shopping cart."""
     storeInventory.restockItemToInventory(item)
     myShoppingCart.remove(item)
 
@@ -143,7 +152,7 @@ def makePurchaseFromStore(item):
     # If you can afford the item, buy it and remove it from the store
     if myBankAccount.canAfford(item.price):
         myBankAccount.makePurchase(item.price, item.name)
-        print(f'Purchase complete! You now own {item.name}')
+        print(f'Purchase complete! You now own {item.name}.')
         myStuff.append(item)
         storeInventory.removeItemFromInventory(item)
     else:
@@ -154,7 +163,7 @@ def makePurchaseFromShoppingCart(item):
     # If you can afford the item, buy it and remove it from the store
     if myBankAccount.canAfford(item.price):
         myBankAccount.makePurchase(item.price, item.name)
-        print(f'Purchase complete! You now own {item.name}')
+        print(f'Purchase complete! You now own {item.name}.')
         myStuff.append(item)
         myShoppingCart.remove(item)
     else:
@@ -173,7 +182,7 @@ def Setup():
     print('To begin, please set up a bank account.')
     deposit = input('How much do you want to deposit into your account?: ')
     global myBankAccount
-    myBankAccount = BankAccount(deposit, setPassword())
+    myBankAccount = BankAccount(deposit)
     # Begin shopping
     stillShopping = True
     Menu(stillShopping)
@@ -186,7 +195,7 @@ def Menu(stillShopping):
             "3. View your cart of held items", "4. Review the items you already own",
             "5. View the status of your financials",
             "6. View the most recent items you purchased."
-            "\n7. Open the Store's Visual Interface.", "8. Exit program"]
+            , "7. Exit program"]
 
     while stillShopping:
 
@@ -207,30 +216,10 @@ def Menu(stillShopping):
         elif userChoice == 6:
             viewRecentPurchases()
         elif userChoice == 7:
-            startVisualStore()
-        elif userChoice == 8:
             print('Thanks for shopping! Now exiting program ... ')
             stillShopping = False
         else:
             print('Incorrect input! Please choose again.')
-
-
-def setPassword():
-    """ Sets a password for the user's bank account. """
-    password = input('Please enter a password for your account: ')
-    confirmPassword = input('Please input your password one more time to confirm it!')
-    if password != confirmPassword:
-        print('Your passwords to not match ... ')
-        setPassword()
-    else:
-        print('Password set! Your account is now ready and you can start shopping!')
-        return password
-
-
-def startVisualStore():
-    """ Opens the Store's Visual Window. """
-    import VisualStore
-    VisualStore.Store()
 
 
 def terminateSession():
