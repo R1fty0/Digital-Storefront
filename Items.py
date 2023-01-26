@@ -4,7 +4,7 @@ class Category:
         self.inventory = list()
         self.initialInventory = list()
 
-    def get_inventory(self):
+    def getInventory(self):
         """ Returns the current inventory of the category"""
         return self.inventory
 
@@ -32,6 +32,7 @@ class Category:
 
 class Item:
     def __init__(self, price, name, category):
+        """ Contains all item parameters and item interactions. """
         self.price = price
         self.name = name
         self.category = category

@@ -1,17 +1,18 @@
+Here is the list of everything I did in this project - I may have forgotten to note a few down.
 - Added Computers to Store Inventory
 - Fix Bank Account Issue where user was left with only 1 dollar in their bank account
 - Added a menu where the user can view the items of a single category individually
 - Improved the menu screen instruction display by adding all instruction into a list that is looped through to display the instructions
-- Added the ability to track the 3 most recent purchases.
+- Added the ability to for the user to view the 3 most recent purchases.
 - Gave the user the option to view their most recent purchases (may add option to refund them)
 - Text can be made and displayed with modularity
 - Rewrote the Password logic to resolve verification error (this took way,way,way too long)
 - Passwords can now be letters or words.
-- Gave the user the option of viewing each characteristic of reach item they bought
+- Rewrote Inventory system and all supporting logic
+- Combined the "makePurchaseFromShoppingCart" and "makePurchaseFromStore" functions so that one function can make purchases from both.
+- Combined the "moveItemToShoppingCart" and "moveItemToUserInventory" so that items can moved to either the user's shopping cart or inventory depending on what destination is given.
+- Gave the user the option of viewing each characteristic of each item in the catalog
+- Gave the user the option of viewing item specifics for each item that they own.
+- Enable the user to return the last 3 items they purchased.
 
 
-To-Do:
-- Simplify Initialize Inventories
-- Track the three most recent items that were purchased and their time.
-- Enable the user to return the last item they purchased.
-- Enable items and their specifics to be viewed individually

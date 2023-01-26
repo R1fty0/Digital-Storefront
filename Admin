@@ -1,0 +1,28 @@
+    def addNewItemToCategory(self):
+        category = input("What category would you like to access?: ")
+        inventory = None
+        try:
+            if category.upper() == self.foodCategory.name.upper():
+                inventory = self.foodCategory
+            if category.upper() == self.gamesCategory.name.upper():
+                inventory = self.gamesCategory
+            if category.upper() == self.clothingCategory.name.upper():
+                inventory = self.clothingCategory
+            if category.upper() == self.computersCategory.name.upper():
+                inventory = self.computersCategory
+            try:
+                item = input("Enter the name of the item you like to add")
+
+            except AttributeError:
+                pass
+        except AttributeError or ValueError:
+            feedback = ["An error has occurred when identifying what category you are trying to access!",
+                        "Press 1 to try again.", "Press any other key to return to the Admin Menu."]
+            for text in feedback:
+                print(text)
+            choice = int(input("What would you like to do?: "))
+            if choice == 1:
+                print("Re-opening IMS...")
+                self.addNewItemToCategory()
+            else:
+                print("Returning to admin menu!")

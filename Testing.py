@@ -22,18 +22,19 @@ for key, value in employee.items():
     print(f"{key}: {value}")
 
 
-import itertools
+
 
 my_list = [1, 2, 3, 4, 5]
 
-for n in my_list:
-    last_item = next(itertools.islice(my_list, 1, None))
-    print("Last item:" + str(last_item))
+print(f"OG: {len(my_list)}")
+for i in my_list:
+    print(i)
 
-last_item = next(itertools.islice(my_list, 1, None))
+itemToRemove = len(my_list)
 
-print(last_item) # 5
+my_list.remove(itemToRemove)
 
+print(f"After moving an item: {len(my_list)}")
 
-
-
+for i in my_list:
+    print(i)
