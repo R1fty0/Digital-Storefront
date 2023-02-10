@@ -160,7 +160,7 @@ def reviewMyStuff():
     print("Here is the list of all the items you own: ")
     print(Border)
     for item in myStuff.getInventory():
-        print(item)
+        print(item.name)
     choice = input("If you would like to view any of these items in more detail, press 1. Otherwise, press any key to exit your inventory.")
     print(Border)
     if int(choice) == 1:
